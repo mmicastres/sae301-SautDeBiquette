@@ -20,7 +20,7 @@ class ParticipeManager {
 	* @param participe à ajouter
 	* @return int true si l'ajout a bien eu lieu, false sinon
 	*/
-	public function addParticipe(Participe $participe, Projet $projet) { 
+	public function addParticipe(Participe $participe, $projet) { 
 		
 		// requete d'ajout dans la BD
 		$req = "INSERT INTO participe (id_projet,id_utilisateur) VALUES (?,?)";

@@ -20,7 +20,7 @@ class EstManager {
 	* @param Est à ajouter
 	* @return int true si l'ajout a bien eu lieu, false sinon
 	*/
-	public function addEst(Est $est, Projet $projet) { 
+	public function addEst(Est $est, $projet) { 
            
 		// requete d'ajout dans la BD
 		$req = "INSERT INTO est (id_projet, id_tag) VALUES (?,?)";

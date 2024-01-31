@@ -65,7 +65,9 @@
 		/**
 		 * liste de tous les projets
 		 * @param aucun
-		 * @return rien
+		 * @return la page avec la liste des projets 
+		 * (attention, projets est une variable twig, donc en changeant la requête 
+		 * je peux afficher les projets dépendant que d'un seul utilisateur)
 		 */
 		public function listeProjets()
 		{
@@ -73,20 +75,11 @@
 			echo $this->twig->render('projet_liste.html.twig', array('projets' => $projets, 'acces' => $_SESSION['acces']));
 		}
 
+
 		/**
-		 * liste de MES projets
+		 * formulaire ajout de projet
 		 * @param aucun
-		 * @return rien
-		 */
-		public function listeMesProjets($idUtilisateur)
-		{
-			$projets = $this->projetManager->getListProjetsUtilisateur($idUtilisateur);
-			echo $this->twig->render('projet_liste.html.twig', array('projets' => $projets, 'acces' => $_SESSION['acces']));
-		}
-		/**
-		 * formulaire ajout
-		 * @param aucun
-		 * @return rien
+		 * @return le formulaire d'ajout de projet
 		 */
 		public function formAjoutProjet()
 		{
@@ -153,6 +146,10 @@
 
 		/**
 		 * suppression dans la BD d'un proj à partir de l'id choisi dans le form précédent
+		 * Cette fonction est créer pour que je puisse l'utiliser : 
+		 * -dans le cadre d'une suppression admin
+		 * -dans le cadre d'une suppression uti 
+		 * c'est nécessaire car les deux ne renvoient pas la même pages (admin = liste des utis apres ajout, suppr simple = page notif)
 		 * @param aucun
 		 * @return bool
 		 */
@@ -173,7 +170,7 @@
 		}
 		// Je sépare en deux fonction pour ne pas avoir le render de lié et pour pouvoir appeler ma fonction dans la suppression de ressource
 		/**
-		 * suppression dans la BD d'un proj à partir de l'id choisi dans le form précédent
+		 * suppression dans la BD d'un proj à partir de l'id du projet (récupérer au bouton)
 		 * @param aucun
 		 * @return rien
 		 */
@@ -186,18 +183,12 @@
 			}
 			echo $this->twig->render('notification.html.twig', array('notif' => $notif, 'acces' => $_SESSION['acces']));
 		}
-		/**
-		 * suppression dans la BD d'une liste de proj de la liste d'objets renvoyés 
-		 * @param Tableau de Projet
-		 * @return bool
-		 */
-
 		
 
 		/**
 		 * form de saisi des nouvelles valeurs du proj à modifier
 		 * @param aucun
-		 * @return rien
+		 * @return le form de modification
 		 */
 		public function saisieModProjet()
 		{
@@ -218,8 +209,8 @@
 
 		/**
 		 * modification dans la BD d'un proj à partir des données du form précédent
-		 * @param aucun
-		 * @return rien
+		 * @param aucun 
+		 * @return la notification si c'est bien modifié 
 		 */
 		public function modProjet()
 		{
@@ -273,7 +264,7 @@
 
 
 		/**
-		 * recherche dans la BD d'proj à partir des données du form précédent
+		 * recherche dans la BD des projets, en fonction de ce qui a été rentré 
 		 * @param aucun
 		 * @return rien
 		 */
@@ -283,14 +274,12 @@
 			echo $this->twig->render('projet_liste.html.twig', array('projets' => $projets, 'acces' => $_SESSION['acces']));
 		}
 
-		// Pour la recherche avancé dans le profil
-		// public function rechercheProjetUtilisateur($idUtilisateur) {
-		// 	$utilisateur = $this->utilisateurManager->getUtilisateur($idUtilisateur);
-		// 	$projets = $this->projetManager->searchProjetUtilisateur($_POST["recherche"],$idUtilisateur);
-		// 	$infosUtilisateur = true;
-		// 	$this->twig->render('projet_liste.html.twig', array('acces' => $_SESSION['acces'],'projets'=>$projets, 'utilisateur' => $utilisateur, 'infosUtilisateur'=>$infosUtilisateur));
-		// }
 
+		/**
+		 * Affiche le detail d'un projet
+		 * @param aucun
+		 * @return rien
+		 */
 		public function detailProjet()
 		{
 			$projet = $this->projetManager->getProjet($_POST['id_projet']);
@@ -305,6 +294,11 @@
 			echo $this->twig->render('projet_details.html.twig', array('acces' => $_SESSION['acces'], 'idUtilisateur' => $_SESSION['idUtilisateur'], 'projet' => $projet, 'sources' => $sources, 'tags' => $tags, 'ressource' => $ressource, 'sae' => $sae, 'utilisateurs' => $utilisateurs, 'categorie' => $categorie, 'evaluations' => $evaluations));
 		}
 
+		/**
+		 * Affiche la liste des catégories
+		 * @param aucun
+		 * @return la liste des catégories
+		 */
 		public function getListCategorie()
 		{
 			$nom = "Catégories";
@@ -312,11 +306,22 @@
 			echo $this->twig->render('gestion_liste.html.twig', array('acces' => $_SESSION['acces'], 'elements' => $categories, 'nom' => $nom));
 		}
 
+		/**
+		 * Supprime une catégories
+		 * @param aucun
+		 * @return la liste des catégories
+		 */
 		public function suppCategorie()
 		{
 			$this->categorieManager->deleteCategorie($_POST['id_categorie']);
 			$this->getListCategorie();
 		}
+
+		/**
+		 * Ajoute une catégories
+		 * @param aucun
+		 * @return la liste des catégories
+		 */
 
 		public function addCategorie()
 		{
@@ -325,6 +330,11 @@
 			$this->getListCategorie();
 		}
 
+		/**
+		 * Affiche la liste des ressources
+		 * @param aucun
+		 * @return la liste des ressources et saé
+		 */
 		public function getListRessource()
 		{
 			$nom = "Ressources";
@@ -332,7 +342,11 @@
 			$saes = $this->saeManager->getListSae();
 			echo $this->twig->render('gestion_liste.html.twig', array('acces' => $_SESSION['acces'], 'elements' => $ressources, 'saes' => $saes, 'nom' => $nom));
 		}
-
+		/**
+		 * Supprime une ressource
+		 * @param aucun
+		 * @return la liste des ressources et saé
+		 */
 		public function suppRessource()
 		{
 			// Je supprime d'abord tous les projet lié à la ressource avant de supprimer la ressource
@@ -345,19 +359,32 @@
 			$this->getListRessource();
 		}
 
+		/**
+		 * Ajoute une ressource
+		 * @param aucun
+		 * @return la liste des ressources et saé
+		 */
 		public function addRessource()
 		{
 			$ressource = new Ressource($_POST);
 			$this->ressourceManager->addRessource($ressource);
 			$this->getListRessource();
 		}
-
+		/**
+		 * Supprime une saé
+		 * @param aucun
+		 * @return la liste des ressources et saé
+		 */
 		public function suppSae()
 		{
 			$this->saeManager->deleteSae($_POST['id_sae']);
 			$this->getListRessource();
 		}
-
+		/**
+		 * Ajoute une saé
+		 * @param aucun
+		 * @return la liste des ressources et saé
+		 */
 		public function addSae()
 		{
 			$sae = new Sae($_POST);

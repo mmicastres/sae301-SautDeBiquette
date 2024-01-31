@@ -32,7 +32,7 @@ class UtilisateurController
 	 * @param aucun
 	 * @return rien
 	 */
-	function utilisateurConnexion($data)
+	function utilisateurConnexion()
 	{
 		// verif du login et mot de passe
 		// if ($_POST['login']=="user" && $_POST['passwd']=="pass")

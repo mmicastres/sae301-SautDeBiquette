@@ -17,27 +17,9 @@ class SourceManager {
         
 	/**
 	* ajout d'une source dans la BD
-	* @param Source à ajouter
+	* @param Source à ajouter et le projet avec lequel l'associer
 	* @return int true si l'ajout a bien eu lieu, false sinon
 	*/
-	public function addSource(Source $source) { 
-        
-        // calcul d'un nouveau code source non déja utilisé = Maximum + 1
-
-		$stmt = $this->_db->prepare("SELECT max(id_source) AS maximum FROM source");
-		$stmt->execute();
-		$source->setIdSource($stmt->fetchColumn()+1);
-		// requete d'ajout dans la BD
-		$req = "INSERT INTO source (id_source, nom_source,id_projet) VALUES (?,?,?)";
-		$stmt = $this->_db->prepare($req);
-		$res  = $stmt->execute(array($source->getIdSource(),$source->getNomSource(),$source->getIdProjet()));		
-		// pour debuguer les requêtes SQL
-		$errorInfo = $stmt->errorInfo();
-		if ($errorInfo[0] != 0) {
-			print_r($errorInfo);
-		}
-		return $res;
-	}
 
 	public function addSourceProjet(Source $source,$projet) { 
         

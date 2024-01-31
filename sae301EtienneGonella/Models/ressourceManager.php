@@ -75,24 +75,10 @@ class RessourceManager {
 		return $ressources;
 	}
 
-    public function getRessourceSae(int $idSae){
-		$ressources = array();
-		$req = 'SELECT id_ressource, semestre, intitule, numero_resource, id_sae FROM ressource WHERE id_sae = ?';
-		$stmt = $this->_db->prepare($req);
-		$stmt->execute(array($idSae));
-		// pour debuguer les requêtes SQL
-		$errorInfo = $stmt->errorInfo();
-		if ($errorInfo[0] != 0) {
-			print_r($errorInfo);
-		}
-		// récup des données
-		while ($donnees = $stmt->fetch())
-		{
-			$ressources[] = new Ressource($donnees);
-		}
-		return $ressources;
-	}
-
+	/**
+	* retourne les ressources pour un projet 
+	* @return Ressource[]
+	*/
 	public function getRessourceProjet(int $idProjet){
 		$req = 'SELECT ressource.id_ressource, semestre, intitule, numero_ressource, ressource.id_sae, nom_sae FROM ressource JOIN projet ON ressource.id_ressource = projet.id_ressource JOIN sae ON ressource.id_sae = sae.id_sae WHERE id_projet = ?';
 		$stmt = $this->_db->prepare($req);

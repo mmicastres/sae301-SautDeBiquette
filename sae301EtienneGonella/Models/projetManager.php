@@ -42,16 +42,6 @@ class ProjetManager
 		return $projet;
 	}
 
-	/**
-	 * nombre d'projets dans la base de données
-	 * @return int le nb de projets
-	 */
-	public function countProjets(): int
-	{
-		$stmt = $this->_db->prepare('SELECT COUNT(*) FROM projet');
-		$stmt->execute();
-		return $stmt->fetchColumn();
-	}
 
 	/**
 	 * suppression d'un projet dans la base de données
@@ -129,28 +119,6 @@ class ProjetManager
 		return $projets;
 	}
 
-	/**
-	 * retourne l'ensemble des Projets présents dans la BD pour une Sae  A FINIR JE LAI A PEINE COMMENCER
-	 * @param int idSae
-	 * @return Projet[]
-	 */
-	public function getListProjetsSae(int $idSae)
-	{
-		$projets = array();
-		$req = 'SELECT id_projet,titre,description,img_projet,lien_demo,annee,projet.id_ressource,id_categorie FROM projet JOIN ressource ON projet.id_ressource = ressource.id_ressource WHERE id_sae=?';
-		$stmt = $this->_db->prepare($req);
-		$stmt->execute(array($idSae));
-		// pour debuguer les requêtes SQL
-		$errorInfo = $stmt->errorInfo();
-		if ($errorInfo[0] != 0) {
-			print_r($errorInfo);
-		}
-		// recup des données
-		while ($donnees = $stmt->fetch()) {
-			$projets[] = new Projet($donnees);
-		}
-		return $projets;
-	}
 
 	/**
 	 * retourne l'ensemble des Projets présents dans la BD pour une ressource
@@ -175,29 +143,6 @@ class ProjetManager
 		return $projets;
 	}
 
-
-	/**
-	 * retourne l'ensemble des Projets présents dans la BD pour une catégorie
-	 * @param int idUtilisateur
-	 * @return Projet[]
-	 */
-	public function getListProjetsCategorie(int $idCategorie)
-	{
-		$projets = array();
-		$req = 'SELECT id_projet,titre,description,img_projet,lien_demo,annee,id_ressource,id_categorie FROM projet WHERE id_categorie = ?';
-		$stmt = $this->_db->prepare($req);
-		$stmt->execute(array($idCategorie));
-		// pour debuguer les requêtes SQL
-		$errorInfo = $stmt->errorInfo();
-		if ($errorInfo[0] != 0) {
-			print_r($errorInfo);
-		}
-		// recup des données
-		while ($donnees = $stmt->fetch()) {
-			$projets[] = new Projet($donnees);
-		}
-		return $projets;
-	}
 
 
 	/**
@@ -234,24 +179,25 @@ class ProjetManager
 		return $projets;
 	}
 
-	public function searchProjetUtilisateur(string $recherche, int $idUtilisateur)
-	{
-		$req = "SELECT id_projet,titre,description,img_projet,lien_demo,annee,id_ressource,id_categorie FROM projet WHERE id_utilisateur = ? AND titre LIKE '%" . $recherche . "%'OR description LIKE '%" . $recherche . "%' ";
+	// Une fonction que j'avais créer pour pouvoir effectuer une recherche dans les projets d'un utilisateur donné
+	// public function searchProjetUtilisateur(string $recherche, int $idUtilisateur)
+	// {
+	// 	$req = "SELECT id_projet,titre,description,img_projet,lien_demo,annee,id_ressource,id_categorie FROM projet WHERE id_utilisateur = ? AND titre LIKE '%" . $recherche . "%'OR description LIKE '%" . $recherche . "%' ";
 
-		// execution de la requete				
-		$stmt = $this->_db->prepare($req);
-		$stmt->execute(array($idUtilisateur));
-		// pour debuguer les requêtes SQL
-		$errorInfo = $stmt->errorInfo();
-		if ($errorInfo[0] != 0) {
-			print_r($errorInfo);
-		}
-		$projets = array();
-		while ($donnees = $stmt->fetch()) {
-			$projets[] = new Projet($donnees);
-		}
-		return $projets;
-	}
+	// 	// execution de la requete				
+	// 	$stmt = $this->_db->prepare($req);
+	// 	$stmt->execute(array($idUtilisateur));
+	// 	// pour debuguer les requêtes SQL
+	// 	$errorInfo = $stmt->errorInfo();
+	// 	if ($errorInfo[0] != 0) {
+	// 		print_r($errorInfo);
+	// 	}
+	// 	$projets = array();
+	// 	while ($donnees = $stmt->fetch()) {
+	// 		$projets[] = new Projet($donnees);
+	// 	}
+	// 	return $projets;
+	// }
 
 	/**
 	 * modification d'un projet dans la BD

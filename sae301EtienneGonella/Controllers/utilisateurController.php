@@ -83,7 +83,12 @@ class UtilisateurController
 				$ok = $this->utilisateurManager->addUtilisateur($utilisateur);
 				return $ok;
 	}}}
-	// Permet de gérer l'inscription d'un utilisateur
+	
+	/**
+	 * Permet de gérer l'inscription d'un utilisateur
+	 * @param aucun
+	 * @return la page notification
+	 */
 	function utilisateurInscription()
 	{			$ok = $this->utilisateurAdd();
 
@@ -94,17 +99,13 @@ class UtilisateurController
 				}
 				echo $this->twig->render('notification.html.twig', array('acces' => $_SESSION['acces'], 'notif' => $notif));
 			}
-		
-	function utilisateurAddAdmin()
-	{	
-		$this->utilisateurAdd();
-		$this->getListUtilisateur();
-	}
+	
+
 
 	/**
 	 * formulaire de connexion
 	 * @param aucun
-	 * @return rien
+	 * @return le formulaire de connexion
 	 */
 	function utilisateurFormulaire()
 	{
@@ -112,7 +113,11 @@ class UtilisateurController
 	}
 
 
-	// Permet de renvoyer les infos d'un utilisateur
+	/**
+	 * au click sur mon espace
+	 * @param aucun
+	 * @return le Renvoie l'espace utilisateur (la même feuille que la liste projet avec ses infos d'afficher ET ses projets )
+	 */
 	public function utilisateurInfos($idUtilisateur)
 	{
 		$utilisateur = $this->utilisateurManager->getUtilisateur($idUtilisateur);
@@ -121,6 +126,11 @@ class UtilisateurController
 		echo $this->twig->render('projet_liste.html.twig', array('acces' => $_SESSION['acces'], 'projets' => $projets, 'utilisateur' => $utilisateur, 'infosUtilisateur' => $infosUtilisateur));
 	}
 
+	/**
+	 * au click sur Gestion
+	 * @param aucun
+	 * @return le Renvoie l'espace administrateur
+	 */
 	function utilisateurGestion()
 	{
 
@@ -132,6 +142,11 @@ class UtilisateurController
 		}
 	}
 
+	/**
+	 * Dans la gestion
+	 * @param aucun
+	 * @return le Renvoie la liste des utilisateurs pour l'admin
+	 */
 	function getListUtilisateur()
 	{
 		$utilisateurs = $this->utilisateurManager->getListUtilisateur();
@@ -139,7 +154,22 @@ class UtilisateurController
 		echo $this->twig->render('gestion_liste.html.twig', array('acces' => $_SESSION['acces'], 'nom' => $nom, 'elements' => $utilisateurs));
 	}
 
-
+	/**
+	 * Permet de gérer l'inscription d'un utilisateur
+	 * @param aucun
+	 * @return la liste des utilisateurs
+	 */
+	function utilisateurAddAdmin()
+	{	
+		$this->utilisateurAdd();
+		$this->getListUtilisateur();
+	}
+	
+	/**
+	 * Supprime un utilisateur depuis l'espace Admin, ainsi que ses liens
+	 * @param aucun
+	 * @return la liste des utilisateurs actualisée 
+	 */
 	function utilisateurSuppUtilisateurAdmin()
 	{
 

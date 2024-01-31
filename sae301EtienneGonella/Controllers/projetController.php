@@ -94,7 +94,7 @@
 		/**	
 		 * ajout dans la BD d'un proj à partir du form
 		 * @param aucun
-		 * @return rien
+		 * @return la page notification si le projet est bien ajouté 
 		 */
 		public function ajoutProjet()
 		{

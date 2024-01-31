@@ -1,0 +1,16 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+    <div class="d-flex flex-row justify-content-center bg-purple-400 border-radius5 m-5 p-5">
+        <div class="d-flex flex-column align-items-center     bg-white border-radius5 m-5 p-5">
+
+
+        <h2 class="text-center">    {{notif|raw}}   </h2>
+        <h2 class="text-center">Merci</h2>
+
+        <a class="nav-link" href="?action=accueil"><button class="bg-purple-300 rounded text-white border-0 m-1 p-2">Accueil</button></a>    
+        </div>
+    </div>
+
+{% endblock %}

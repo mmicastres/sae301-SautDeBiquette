@@ -1,0 +1,188 @@
+{% extends "index.html.twig" %}
+{% block section %}
+
+
+    <div class="d-flex flex-row justify-content-center bg-purple-300 border-radius5 m-5 p-5">
+        <div class="d-flex flex-column align-items-center bg-white border-radius5 m-5 p-5">
+
+
+            <h2 class="text-center">   Liste des {{nom}}   </h2>
+
+            {% if nom == 'Catégories' %}
+            <form class="d-flex h-100 ajoutElement" action="index.php" method="post" autocomplete="off" >
+                <input class="bg-purple-300 rounded-start text-white border-0	p-1 " type="text" value="" name="nom_categorie" placeholder="Nom de la Catégorie">
+                <input class="bg-purple-300 rounded-end text-white border-0	p-1" type="submit" value="Ajouter" name="ajouterCategorie">
+            </form>
+    
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id #</th>
+                        <th scope="col">Nom de la catégorie</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for categorie in elements %}
+
+                            <tr>
+                                <th scope="row">{{categorie.idCategorie}}</th>
+                                <td>{{categorie.nomCategorie}}</td>
+                                <td>
+                                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                                        <input class="bg-purple-300 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerCategorie">
+                                        <input type="hidden" name="id_categorie" value={{categorie.idCategorie}}>
+                                    </form>
+                                </td>
+                            </tr>
+
+            {% endfor %}
+                </tbody>
+                </table>
+            {% endif %}
+
+
+                        {% if nom == 'Ressources' %}
+            <form class="d-flex flex-column h-100 ajoutElement m-1" action="index.php" method="post" autocomplete="off">
+            <legend>Ajouter une Ressource :</legend>
+            <div>
+                <input class="bg-purple-300 rounded-start text-white border-0	p-1 " type="number" value="" name="semestre" placeholder="Semestre">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="text" value="" name="intitule" placeholder="Intitulé">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="number" value="" name="numero_ressource" placeholder="Numéro de la ressource">
+                <select class="bg-purple-300  text-white border-0	p-1 "  name="id_sae">
+                {% for sae in saes %}
+                                <option value={{sae.idSae}}>{{sae.nomSae}}</option>
+            {% endfor %}
+                </select>
+                <input class="bg-purple-300 rounded-end text-white border-0	p-1" type="submit" value="Ajouter" name="ajouterRessource">
+                </div>
+            </form>
+    
+            <form class="d-flex flex-column h-100 ajoutElement m-1" action="index.php" method="post">
+            <legend>Ajouter une Saé :   </legend>
+            <div>
+
+                <input class="bg-purple-300 rounded-start text-white border-0	p-1 " type="text" value="" name="nom_sae" placeholder="Nom de la Saé">
+                <input class="bg-purple-300 rounded-end text-white border-0	p-1" type="submit" value="Ajouter" name="ajouterSae">
+                </div>
+            </form>
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id #</th>
+                        <th scope="col">Semestre</th>
+                        <th scope="col">Intitulé de la Ressource</th>
+                        <th scope="col">Numéro de la Ressource</th>
+                        <th scope="col">Saé associée</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ressource in elements %}
+
+                            <tr>
+                                <th scope="row">{{ressource.idRessource}}</th>
+                                <td>{{ressource.semestre}}</td>
+                                <td>{{ressource.intitule}}</td>
+                                <td>{{ressource.numeroRessource}}</td>
+                                <td>{{ressource.nomSae}}</td>
+
+                                <td>
+                                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                                        <input class="bg-purple-300 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerRessource">
+                                        <input type="hidden" name="id_ressource" value={{ressource.idRessource}}>
+                                    </form>
+                                </td>
+                            </tr>
+
+            {% endfor %}
+            
+                </tbody>
+                </table>
+
+                               <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id #</th>
+                        <th scope="col">Nom de la Saé</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sae in saes %}
+
+                            <tr>
+                                <th scope="row">{{sae.idSae}}</th>
+                                <td>{{sae.nomSae}}</td>
+                                <td>
+                                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                                        <input class="bg-purple-300 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerSae">
+                                        <input type="hidden" name="id_sae" value={{sae.idSae}}>
+                                    </form>
+                                </td>
+                            </tr>
+
+            {% endfor %}
+            
+                </tbody>
+                </table>
+            {% endif %}
+
+        {% if nom == 'Utilisateurs' %}
+            <form class="d-flex h-100 ajoutElement " enctype="multipart/form-data" action="index.php" method="post" autocomplete="off">
+                <input class="bg-purple-300 rounded-start text-white border-0	p-1 " type="text" value="" name="nom" required placeholder="Nom">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="text" value="" name="prenom" required placeholder="Prénom">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="text" value="" name="id_iut" required placeholder="Id de l'iut">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="mail" value="" name="mail" required placeholder="Mail de l'iut" autocomplete="off">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="password" value="" name="mdp" required placeholder="mot de passe" autocomplete="new-password">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="checkbox"  value="1"  name="administrateur">
+                <input class="bg-purple-300  text-white border-0	p-1 " type="file" value="" name="pdp" accept="image/png, image/jpeg" required>
+                <input class="bg-purple-300 rounded-end text-white border-0	p-1" type="submit" value="Ajouter" name="ajouterUtilisateur" required>
+            </form>
+    
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id #</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prenom</th>
+                        <th scope="col">Id de l'iut</th>
+                        <th scope="col">Mail de l'iut</th>
+                        <th scope="col">mot de passe</th>
+                        <th scope="col">Administrateur</th>
+                        <th scope="col">Photo de profil</th>
+
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for utilisateur in elements %}
+
+                            <tr>
+                                <th scope="row">{{utilisateur.idUtilisateur}}</th>
+                                <td>{{utilisateur.nom}}</td>
+                                <td>{{utilisateur.prenom}}</td>
+                                <td>{{utilisateur.idIut}}</td>
+                                <td>{{utilisateur.mail}}</td>
+                                <td>{{utilisateur.mdp}}</td>
+                                <td>{% if utilisateur.administrateur %} oui {% else %} non {% endif %}</td>
+                                <td><img class="col-4" src={{utilisateur.pdp}} alt={{utilisateur.pdp}}></td>
+
+
+
+
+
+                                <td>
+                                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                                        <input type="hidden" name="id_utilisateur" value={{utilisateur.idUtilisateur}}>
+                                        <input class="bg-purple-300 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerUtilisateur">
+                                    </form>
+                                </td>
+                            </tr>
+
+            {% endfor %}
+                </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

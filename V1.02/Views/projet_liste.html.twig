@@ -1,0 +1,84 @@
+{% extends "index.html.twig" %}
+
+
+
+
+
+{% block section %}
+
+	{% if infosUtilisateur != true %}
+
+		<form class="d-flex justify-content-center" method="post" action="index.php">
+        	<div class="bg-purple-300 text-white border-radius3 p-2 m-2">
+				<label for="recherche">Chercher un projet :</label>
+				<input class="rounded-start border-0" type="search" id="recherche" name="recherche"
+       	 		placeholder="titre / description" autocomplete="off">
+				<input class="rounded-end border-0" type=submit value = "Rechercher" name="rechercheProjets">
+			</div>
+    	</form>
+	{% endif %}
+
+{% if infosUtilisateur %}
+
+	<div class="d-flex row justify-content-evenly">
+				<div class="card col m-3 p-0 border-radius3" style="width: 18rem;">
+ 				 	<img class="card-img-top border-radius3" src={{utilisateur.pdp}} alt={{utilisateur.pdp}}>
+ 				 	<div class="d-flex flex-column card-body justify-content-around ">
+  						<h5 class="card-title">{{utilisateur.nom}} {{utilisateur.prenom}}</h5>
+						<h6>Mes informations personnelles :</h6>
+    					<p class="card-text">
+						<ul class="list-group">
+						<li class="list-group-item"> {{utilisateur.idIut}}</li>
+						<li class="list-group-item">Adresse mail de l'iut : {{utilisateur.mail}}</li>
+						<li class="list-group-item">Mot de passe : {{utilisateur.mdp}}</li>
+						<li class="list-group-item">Administrateur : {% if utilisateur.administrateur %} Oui {% else %} non {% endif %}</li>
+
+						</ul>
+						</p>
+ 					</div>
+				</div>
+
+								<div class="card col m-3 p-0 border-radius3" style="width: 18rem;">
+ 				 	<img class="card-img-top border-radius3" src={{utilisateur.pdp}} alt={{utilisateur.pdp}}>
+ 				 	<div class="d-flex flex-column card-body justify-content-around ">
+  						<h5 class="card-title">{{utilisateur.nom}} {{utilisateur.prenom}}</h5>
+						<h6>Mes informations personnelles :</h6>
+    					<p class="card-text">
+						<ul class="list-group">
+						<li class="list-group-item"> {{utilisateur.idIut}}</li>
+						<li class="list-group-item">Adresse mail de l'iut : {{utilisateur.mail}}</li>
+						<li class="list-group-item">Mot de passe : {{utilisateur.mdp}}</li>
+						<li class="list-group-item">Administrateur : {% if utilisateur.administrateur %} Oui {% else %} non {% endif %}</li>
+
+						</ul>
+						</p>
+ 					</div>
+				</div>
+
+
+<button class='bg-purple-300 border-radius3  border-0 p-2 m-3 align-self-center'>
+
+        <a class="nav-link text-white" href="?action=ajoutProjet">Ajouter un Projet</a></button>
+
+
+{% endif %}
+		<div class="d-flex row justify-content-evenly">
+			{% for proj in projets %}
+
+				<div class="card col-4 m-3 p-0 border-radius3" style="width: 18rem;">
+ 				 	<img class="card-img-top border-radius3" src={{proj.imgProjet}} alt={{proj.imgProjet}}>
+ 				 	<div class="d-flex flex-column card-body justify-content-around ">
+  						<h5 class="card-title">{{proj.titre}} {{proj.annee}}</h5>
+    					<p class="card-text">{{proj.description}}</p>
+					
+    					<form class="d-flex h-100" action="index.php" method="post">
+								<input type="hidden" name="id_projet" value={{proj.idProjet}}>
+								<input class="bg-purple-300 rounded text-white border-0	p-1 align-self-end" type="submit" value="Détails" name="detailsProjet">
+						</form>
+ 					</div>
+				</div>
+			{% endfor %}
+			
+		</div>
+
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "index.html.twig" %}
+{% block section %}
+<div class="bg-purple-300 p-3 m-3 text-white border-radius5">
+
+	<div class="d-flex flex-column align-items-center" >
+		<h1>{{projet.titre}}</h1>
+		<h2>Saé {{sae.nomSae}} Ressource {{ressource.intitule}} R{{ressource.numeroRessource}}</h2>
+	</div>
+
+	<div class="d-flex row  flex-nowrap justify-content-between"> 
+		<img class="border-radius5 w-75" src={{projet.imgProjet}} alt={{projet.imgProjet}}> 
+
+		<ul class=" w-25 p-3 bg-white text-dark fw-bold	 list-unstyled border-radius3 d-flex flex-column justify-content-evenly text-uppercase font-weight-bold">
+					{% for utilisateur in utilisateurs %}
+					<li>{{utilisateur.nom}} {{utilisateur.prenom}}</li>
+					{% endfor %}
+		</ul>
+
+	</div>	
+ 					
+
+
+	<div>
+		<div class="m-3">
+			<p class="col-12 bg-white rounded col- text-secondary row justify-content-center">
+			
+			{% for tag in tags %}
+				{{tag.nomTag}}/
+			{% endfor %}
+			{{categorie.nomCategorie}}</p>
+		</div>
+		<h2>{{projet.titre}}</h2>
+		<p>{{projet.description}}</p>
+		<div class ="">
+			<h5>Lien des sources :</h5>
+				{% for source in sources %}
+					<a class="text-white" href={{source.nomSource}} target="_blank"> {{source.nomSource}}</a>
+				{% endfor %}
+		</div>
+		<div class ="">
+			<h5>Lien du projet : </h5><a class="text-white" href={{projet.lienDemo}} target="_blank">{{projet.lienDemo}}</a>
+		</div>
+		<h4>{{projet.annee}}</h4>
+	{% if acces =="admin" %} 
+		<div class="d-flex flex-row justify-content-evenly">
+   					<form class="d-flex h-100" action="index.php" method="post">
+						<input type="hidden" id="id_projet" name="id_projet" value={{projet.idProjet}}>
+						<input class="bg-purple-400 rounded text-white border-0	p-1 align-self-end" type="submit" value="Modifier" name="modifierProjet">
+					</form>
+
+                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                        <input type="hidden" name="id_projet" value={{projet.idProjet}}>
+                        <input class="bg-purple-400 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerProjet">
+                    </form>
+				</div>
+	
+	{% else %}
+	{% for utilisateur in utilisateurs %}
+				{% if (utilisateur.idUtilisateur == idUtilisateur) %}
+				<div class="d-flex flex-row justify-content-evenly">
+   					<form class="d-flex h-100" action="index.php" method="post">
+						<input type="hidden" id="id_projet" name="id_projet" value={{projet.idProjet}}>
+						<input class="bg-purple-400 rounded text-white border-0	p-1 align-self-end" type="submit" value="Modifier" name="modifierProjet">
+					</form>
+
+                    <form class="d-flex h-100 suppElement" action="index.php" method="post">
+                        <input type="hidden" name="id_projet" value={{projet.idProjet}}>
+                        <input class="bg-purple-400 rounded text-white border-0	p-1 align-self-end" type="submit" value="Supprimer" name="supprimerProjet">
+                    </form>
+				</div>
+				{% endif %}
+	{% endfor %}
+	{% endif %}
+
+</div>
+
+</div>
+	{% for eval in evaluations %}
+
+			<div class="card" style="width: 18rem;">
+ 				 <div class="card-body">	
+  					<h5 class="card-title">{{eval.nom}} {{eval.prenom}} {{eval.note}}/5</h5>
+    				<p class="card-text">{{eval.texte}}</p>
+ 					</div>
+			</div>
+
+			
+ 	{% endfor %}
+
+
+	{% if acces == "oui" or acces =="admin" %}
+
+
+	<form method="post" action="index.php" id="commentaireForm" class="well d-flex align-self-stretch ">
+	<fieldset class="d-flex flex-column align-items-center col-12">
+  	<legend class="align-self-start">Laisser un commentaire</legend>
+  
+	<div class="form-group d-flex flex-column col-12">
+      <label for="radios" class="col-sm-2 col-form-label col-form-label-sm d-flex column">Note : </label>
+      <div id ="radios" class="col-sm-6 d-flex flex-row justify-content-evenly">
+	  <div>
+      	<label for="1/5" class="">1/5</label>
+        <input  id ="1/5" type="radio" value="1" class="" name="note" />
+	</div>
+	  <div>
+      	<label for="2/5" class="">2/5</label>
+        <input  id ="2/5"type="radio" value="2" class="" name="note" />
+	</div>
+
+	  <div>
+      	<label for="3/5" class="">3/5</label>
+        <input  id ="3/5" type="radio" value="3" class="" name="note" />
+	</div>
+
+	  <div>
+      	<label for="4/5" class="">4/5</label>
+        <input  id ="4/5" type="radio" value="4" class="" name="note" />
+	</div>
+
+	  <div>
+      	<label for="5/5" class="">5/5</label>
+       	<input  id ="5/5"  type="radio" value="5"class="" 	name="note" />
+	</div>
+
+      </div>
+    </div>
+
+	  	<div class="d-flex flex-column col-12">
+    	<div class="form-group column">
+      		<label for="login" class="col-sm-2 col-form-label col-form-label-sm column d-flex">Commentaire : </label>
+        	<textarea id="texte"  class="form-control form-control-sm" name="texte" required placeholder="Ex : Laisser ici votre commentaire constructif"> </textarea>
+      	</div>
+    </div>
+
+<input type="hidden" id="id_projet" name="id_projet" value={{projet.idProjet}}>
+  <input  type="submit" id="commenter" name="commenter" value="commenter"/>
+  </div>
+</fieldset>
+</form>
+
+{% endif %}
+
+{% endblock %}

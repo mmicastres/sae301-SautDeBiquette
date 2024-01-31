@@ -1,0 +1,84 @@
+
+{% extends "index.html.twig" %}
+
+{% block section %}
+<div class="d-flex flex-row  justify-content-center bg-purple-300 border-radius5 m-5 p-5">
+<form method="post" id="inscriptionForm" action="index.php" enctype="multipart/form-data" autocomplete="off" class="well col-4 bg-white text-dark rounded-start ">
+<fieldset> 
+  <legend class="text-center" >Formulaire d'inscription</legend>
+  
+      <div class="form-group column">
+      <label for="pdp" class=" col-form-label col-form-label-sm">Veuillez déposer votre photo de profil ici :</label>
+      <div class="">
+       <input type="file" id="pdp" name="pdp" class="form-control form-control-sm" required accept="image/png, image/jpeg" >
+      </div>
+    </div>
+
+
+    <div class="form-group column">
+      <label for="nom" class=" col-form-label col-form-label-sm">Nom</label>
+      <div class="">
+        <input  type="text" id="nom" class="form-control form-control-sm" name="nom" required placeholder="Ex:Nom" >
+      </div>
+    </div>
+    <div class="form-group column">
+      <label for="prenom" class=" col-form-label col-form-label-sm">Prénom</label>
+      <div class="">
+        <input  type="text" id="prenom"  class="form-control form-control-sm" name="prenom" required placeholder="Ex:Prénom " >
+      </div>
+    </div>
+    <div class="form-group column">
+      <label for="idIut" class=" col-form-label col-form-label-sm">Identifiant IUT</label>
+      <div class="">
+        <input  type="text" id="idIut"  class="form-control form-control-sm" name="id_iut" required placeholder="Ex:abc1234a" >
+      </div>
+    </div>
+
+    <div class="form-group column">
+      <label for="mail" class=" col-form-label col-form-label-sm">Email étudiant</label>
+      <div class="">
+        <input  type="email" id="mail"  class="form-control form-control-sm" name="mail"  required placeholder="Ex:prénom.nom@iut-tlse3.fr" autocomplete="off" >
+      </div>
+    </div>
+
+    <div class="form-group column">
+      <label for="mdp" class=" col-form-label col-form-label-sm">Mot de Passe</label>
+      <div class="">
+        <input  type="password" id="mdp"  class="form-control form-control-sm" disabled name="mdp" required placeholder="Ex:**********" autocomplete="new-password">
+      </div>
+    </div>
+
+        <div class="form-group column">
+      <label for="confirmMdp" class=" col-form-label col-form-label-sm">Confirmation du Mot de Passe</label>
+      <div class="">
+        <input  type="password" id="confirmMdp"  class="form-control form-control-sm" disabled name="confirmMdp" required placeholder="Ex:**********" autocomplete="new-password">
+      </div>
+    </div>
+  <input type="submit" id="inscription" class="d-none rounded bg-purple-300 text-white border-0 mt-2" name="inscription" value="inscription">
+</fieldset>
+</form>
+
+<form method="post" action="index.php" id="connexionForm" class="well col-4 bg-dark text-white rounded-end d-flex align-self-stretch justify-content-center ">
+<fieldset class="d-flex flex-column col-8 align-items-center">
+  <legend class="text-center">Déjà Inscrit ?</legend>
+  <div class="d-flex h-75 w-100 justify-content-center align-items-center">
+  <div class="d-flex flex-column col-12 ">
+    <div class="form-group column ">
+      <label for="login" class=" col-form-label col-form-label-sm column d-flex">E-mail etudiant</label>
+      <div class="">
+        <input  type="text" id="login"  class="form-control form-control-sm" name="login" required placeholder="Ex:prénom.nom@iut-tlse3.fr" >
+      </div>
+    </div>
+    <div class="form-group column mb-2 ">
+      <label for="passwd" class=" col-form-label col-form-label-sm column d-flex">Mot de passe</label>
+      <div class="">
+        <input  type="password" id="passwd" class="form-control form-control-sm" name="passwd" required placeholder="Ex:************" >
+      </div>
+    </div>
+    <input  type="submit" id="connexion" class="rounded bg-purple-300 text-white" name="connexion" value="connexion">
+  </div>
+  </div>
+</fieldset>
+</form>
+</div>
+{% endblock %}

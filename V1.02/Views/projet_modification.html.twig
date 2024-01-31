@@ -1,0 +1,188 @@
+
+{% extends "index.html.twig" %}
+
+{% block section %}
+  <form method="post" action="index.php" class="well bg-purple-300 border-radius5 m-5 p-5 text-white ajoutForm" autocomplete="off" enctype="multipart/form-data">
+    <fieldset class="form-group" >
+      <legend>Modifier un projet</legend>
+      <div class="form-group row">
+        <label for="titre" class="col-sm-2 col-form-label col-form-label-sm">Titre</label>
+          <div class="col-sm-10 mb-2">
+            <input  type="text" id="titre" class="form-control form-control-sm" name="titre" value="{{projet.titre}}" required placeholder="Titre du projet" />
+          </div>
+      </div>
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label col-form-label-sm">Description du projet</label>
+        <div class="col-sm-10 mb-2">
+          <textarea  id="description" class="form-control form-control-sm" name="description"  required placeholder="Description">{{projet.description}}</textarea>
+        </div>
+        </div>
+      <div class="form-group row">
+        <label for="img_projet" class="col-sm-2 col-form-label col-form-label-sm">Img du Projet</label>
+        <div class="col-sm-10 mb-2">
+          <input  type="file" id="img_projet" class="form-control form-control-sm" name="img_projet"  placeholder="Choisissez l'image de votre projet"/>
+          <img class="col-6 rounded" src="{{projet.imgProjet}}" alt="{{projet.imgProjet}}"> 
+          <input type="hidden" name="img_projet" value="{{projet.imgProjet}}" />
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="lien_demo" class="col-sm-2 col-form-label col-form-label-sm">Lien pour la démo du projet</label>
+        <div class="col-sm-10 mb-2">
+          <input type="text" id="lien_demo" class="form-control form-control-sm" name="lien_demo" value="{{projet.lienDemo}}" required placeholder="Le lien du projet"/>
+        </div>
+      </div>
+
+     
+
+        {% for source in sources %}
+         <div class="form-group row">
+         <label for="nom_source" class="col-sm-2 col-form-label col-form-label-sm">Lien pour les sources du projet</label>
+            <div class="col-sm-10 mb-2">
+              <input type="text" id="nom_source" class="form-control form-control-sm" name="nom_source[]" value="{{source.nomSource}}" required placeholder="Le lien des sources du projet"/>
+          </div>
+          </div>
+        {% endfor %}
+        <div class="form-group row">
+          <label for="annee" class="col-sm-2 col-form-label col-form-label-sm">Année</label>
+          <div class="col-sm-10 mb-2">
+            <input type="number" id="annee" class="form-control form-control-sm" name="annee"value="{{projet.annee}}" required placeholder="Année du projet"/>
+          </div>
+        </div>
+
+ <div class="form-group row ">
+      <label for="mail" class="col-sm-2 col-form-label col-form-label-sm">Liste des participants</label>
+      <div class="col-sm-10">
+                <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur </option>
+                                {% set compteur = 1 %} 
+                                  {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                    {% for utilisateurProjet in utilisateursProjet %} 
+                                      {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                        selected 
+                                      {% endif %} 
+                                    {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                  {% endfor %}
+                                {% set compteur = compteur + 1 %}   
+                </select>
+
+                <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur {{ compteur }} </option>
+                                {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                  {% for utilisateurProjet in utilisateursProjet %} 
+                                    {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                      selected 
+                                    {% endif %} 
+                                  {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                {% endfor %}
+                                {% set compteur = compteur + 1 %} 
+                </select>
+
+                <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur {{ compteur }} </option>
+                                {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                  {% for utilisateurProjet in utilisateursProjet %} 
+                                    {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                      selected 
+                                    {% endif %} 
+                                  {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                {% endfor %}
+                                {% set compteur = compteur + 1 %} 
+                </select>
+
+                
+
+                <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur {{ compteur }} </option>
+                                {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                  {% for utilisateurProjet in utilisateursProjet %} 
+                                    {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                      selected 
+                                    {% endif %} 
+                                  {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                {% endfor %}
+                                {% set compteur = compteur + 1 %} 
+                </select>
+
+                
+              <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur {{ compteur }} </option>
+                                {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                  {% for utilisateurProjet in utilisateursProjet %} 
+                                    {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                      selected 
+                                    {% endif %} 
+                                  {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                {% endfor %}
+                                {% set compteur = compteur + 1 %} 
+              </select>
+
+                
+                <select class="bg-white m-1 text-dark border-0	p-1 "  name="id_utilisateur[]">
+                                <option value="">Selectionner un utilisateur {{ compteur }} </option>
+                                {% for uti in utis %}
+                                  <option value={{uti.idUtilisateur}} 
+                                  {% for utilisateurProjet in utilisateursProjet %} 
+                                    {% if uti.idUtilisateur == utilisateurProjet.idutilisateur and compteur == loop.index %} 
+                                      selected 
+                                    {% endif %} 
+                                  {% endfor %}> 
+                                    {{uti.mail}}</option>
+                                {% endfor %}
+                                {% set compteur = compteur + 1 %} 
+                </select>
+
+                
+
+        </div>
+    </div>
+
+
+      <div class="form-group row">
+        <label for="id_tag" class="col-sm-2 col-form-label col-form-label-sm">tags</label>
+        <div class="col-sm-10 mb-2">       
+          {% for tag in tags %}
+            <label for="id_tag[]">{{tag.nomTag}}</label>
+            <input type='checkbox' value="{{tag.idTag}}" {% for tagProj in tagProjet %} {% if tagProj.idTag == tag.idTag %} checked {% endif %} {% endfor %} name="id_tag[]">
+          {% endfor %}
+        </div>
+      </div> 
+
+
+
+      <div class="form-group row">
+        <label for="id_categorie" class="col-sm-2 col-form-label col-form-label-sm">Catégorie</label>
+        <div class="col-sm-10 mb-2">
+          <select class="bg-white  text-dark border-0	p-1 "  name="id_categorie">
+            {% for categorie in categories %}
+              <option value="{{categorie.idCategorie}}" {% if categorie.idCategorie == projet.idCategorie %} selected {% endif %} > {{categorie.nomCategorie}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div> 
+
+    <div class="form-group row">
+      <label for="id_ressource" class="col-sm-2 col-form-label col-form-label-sm">Ressource</label>
+      <div class="col-sm-10 mb-2">
+        <select class="bg-white  text-dark border-0	p-1 "  name="id_ressource">
+        {% for ressource in ressources %}
+          <option value="{{ressource.idRessource}}" {% if ressource.idRessource == projet.idRessource %} selected {% endif %}> {{ressource.intitule}} </option>
+        {% endfor %}
+        </select>
+      </div>
+    </div>
+
+	  <input type="hidden" class="btn bg-purple-400 text-white" name="id_projet" value="{{projet.idProjet}}" /> 
+	  <input type="submit" class="btn bg-purple-400 text-white" name="valider_modif" value="Modifier"/>
+   </fieldset>
+   </form>
+{% endblock %}

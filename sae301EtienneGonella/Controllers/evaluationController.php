@@ -22,12 +22,10 @@ class EvaluationController{
 	}
 
 	/**
-	 * connexion
-	 * @param aucun
-	 * @return rien
+	 * Nouvelle Evaluation
+	 * @param $idUtilisateur
+	 * @return la page notification
 	 */
-	
-
 
     function newEvaluation($idUtilisateur){
 		$evaluation = new Evaluation($_POST);
@@ -39,15 +37,6 @@ class EvaluationController{
 			$notif = "Erreur ! <br/> Veuillez réessayer";
 		}
 		echo $this->twig->render('notification.html.twig', array('acces' => $_SESSION['acces'], 'notif' => $notif)); 	
-	}
-	/**
-	 * formulaire de connexion
-	 * @param aucun
-	 * @return rien
-	 */
-	function utilisateurFormulaire()
-	{
-		echo $this->twig->render('utilisateur_connexion.html.twig', array('acces' => $_SESSION['acces']));
 	}
 
 }
